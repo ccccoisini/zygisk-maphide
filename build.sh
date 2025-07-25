@@ -7,7 +7,7 @@ build_mode="${1:-release}"
 cd "$(dirname "$0")"
 
 rm -rf ./native/jni/libcxx
-git clone http://github.com/huskydg/libcxx ./native/jni/libcxx
+git clone https://github.com/kimocoder/libcxx ./native/jni/libcxx
 
 pushd native
 rm -fr libs obj
