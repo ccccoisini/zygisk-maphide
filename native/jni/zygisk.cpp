@@ -76,19 +76,24 @@ private:
         // hide module file from maps
         // detection: https://github.com/vvb2060/MagiskDetector/blob/master/README_ZH.md
         // hide all maps with path is data partition but path is not /data/*
+        
         for (auto iter = maps.begin(); iter != maps.end();) {
-            if (iter->path.find("[anon:pine codes]") != std::string::npos) {
-                LOGD("find pine");
+            LOGD("checking map: '%s'", iter->path.c_str());
+            // 匹配所有包含 "pine" 的路径（包括 [anon:pine codes]、/memfd:pine、/data/pine.so 等）
+            if (iter->path.find("pine") != std::string::npos) {
+                LOGD("find pine: %s", iter->path.c_str());
                 iter = maps.erase(iter);
                 continue;
             }
 
-            if (iter->dev != st.st_dev || (iter->path).starts_with("/data/")) {
+            // 原有的过滤逻辑：不是 /data 分区 或是路径以 /data/ 开头
+            if (iter->dev != st.st_dev || iter->path.starts_with("/data/")) {
                 iter = maps.erase(iter);
             } else {
                 ++iter;
             }
         }
+
         hide_from_maps(maps);
     }
 };
