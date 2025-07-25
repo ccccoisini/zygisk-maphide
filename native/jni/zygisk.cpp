@@ -80,7 +80,7 @@ private:
         for (auto iter = maps.begin(); iter != maps.end();) {
             LOGD("checking map: '%s'", iter->path.c_str());
             // 匹配所有包含 "pine" 的路径（包括 [anon:pine codes]、/memfd:pine、/data/pine.so 等）
-            if (iter->path.find("pine") != std::string::npos) {
+            if (iter->path.find("[anon:") != std::string::npos) {
                 LOGD("find pine: %s", iter->path.c_str());
                 iter = maps.erase(iter);
                 continue;
