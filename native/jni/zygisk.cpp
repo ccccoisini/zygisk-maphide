@@ -72,6 +72,13 @@ private:
     	auto maps = lsplt::MapInfo::Scan();
         struct stat st;
         if (stat("/data", &st)) return;
+
+        if (iter->path.find("[anon:pine codes]") != std::string::npos) {
+            LOGD("find pine")
+            iter = maps.erase(iter);
+            continue;
+        }
+        
         // hide module file from maps
         // detection: https://github.com/vvb2060/MagiskDetector/blob/master/README_ZH.md
         // hide all maps with path is data partition but path is not /data/*
